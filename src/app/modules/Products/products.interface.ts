@@ -1,8 +1,11 @@
+import { Schema } from "mongoose";
+
 export interface TProducts {
+  id: string;
   name: string;
   description: string;
   price: number;
-  category: string[];
+  category: Schema.Types.ObjectId;
   imageURL: string;
   stock: number;
   isAvailable: boolean;

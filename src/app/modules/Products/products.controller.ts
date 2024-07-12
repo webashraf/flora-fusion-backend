@@ -1,12 +1,26 @@
 import { RequestHandler } from "express";
-import { Tree } from "./products.model";
+import { productsService } from "./products.service";
 
 const getAllTrees: RequestHandler = async (req, res) => {
-  console.log("get all trees");
-  const result = await Tree.find({});
-  res.send(result);
+  const result = await productsService.getAllProductsFromDB(req.query);
+  res.status(200).json({
+    success: true,
+    message: "Data successfully retrived!",
+    result: result,
+  });
+};
+
+const updateTree: RequestHandler = async (req, res) => {
+  console.log(req.params.id);
+  const result = await productsService.updateTreeIntoDB(req.params.treeId);
+  res.status(200).json({
+    success: true,
+    message: "Tree updated successfully!",
+    result: result,
+  });
 };
 
 export const productsController = {
   getAllTrees,
+  updateTree,
 };
