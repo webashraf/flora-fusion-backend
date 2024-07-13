@@ -1,6 +1,7 @@
 import { Schema } from "mongoose";
 
 export interface TProducts {
+  _id?: string;
   id: string;
   name: string;
   description: string;

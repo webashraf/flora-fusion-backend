@@ -1,28 +1,41 @@
 import { Tree } from "./products.model";
 
-const getAllProductsFromDB = async (searchQuery: Record<string, unknown>) => {
+// Retrive all trees
+const getAllProductsFromDB = async (query: Record<string, unknown>) => {
   let searchTerm = "";
-  if (searchQuery?.searchItem) {
-    searchTerm = searchQuery?.searchItem as string;
+  if (query?.searchItem) {
+    searchTerm = query?.searchItem as string;
   }
-  console.log(searchQuery, searchTerm);
 
-  const result = await Tree.find({
+  const searchQuery = Tree.find({
     $or: ["name"].map((field) => ({
       [field]: { $regex: searchTerm, $options: "i" },
     })),
-  }).populate("category");
+  });
+
+  let sortType: { price: any } = { price: -1 };
+
+  if (query?.price == "1") {
+    sortType.price = 1;
+  }
+
+  const result = await searchQuery.find().sort(sortType).populate("category");
   return result;
 };
 
+const getSingleTreeFromDB = async (params: string) => {
+  return await Tree.findOne({ _id: params }).populate("category");
+};
+
+// update stock
 const updateTreeIntoDB = async (_id: string) => {
   const result = await Tree.findByIdAndUpdate(
-    { _id},
+    { _id },
     { stock: 0 },
     { new: true }
   );
 
-  console.log(result);
+  // console.log(result);
 
   return result;
 };
@@ -30,4 +43,5 @@ const updateTreeIntoDB = async (_id: string) => {
 export const productsService = {
   getAllProductsFromDB,
   updateTreeIntoDB,
+  getSingleTreeFromDB,
 };

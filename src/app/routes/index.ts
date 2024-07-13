@@ -1,5 +1,6 @@
 import express from "express";
 import { categoryRoute } from "../modules/category/category.routes";
+import { orderRoute } from "../modules/orders/order.routes";
 import { productsRoute } from "../modules/Products/products.routes";
 import { userRoutes } from "../modules/user/user.routes";
 
@@ -18,6 +19,14 @@ const allRoutes = [
     path: "/categories",
     route: categoryRoute,
   },
+  {
+    path: "/create-order",
+    route: orderRoute,
+  },
+  // {
+  //   path: "/create-order",
+  //   route: orderRoute,
+  // },
 ];
 
 allRoutes.forEach((route) => {

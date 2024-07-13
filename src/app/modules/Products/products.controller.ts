@@ -10,6 +10,17 @@ const getAllTrees: RequestHandler = async (req, res) => {
   });
 };
 
+const getSingleTree: RequestHandler = async (req, res) => {
+  const { treeId } = req.params;
+
+  const result = await productsService.getSingleTreeFromDB(treeId);
+  res.status(200).json({
+    success: true,
+    message: "Data successfully retrived!",
+    result: result,
+  });
+};
+
 const updateTree: RequestHandler = async (req, res) => {
   console.log(req.params.id);
   const result = await productsService.updateTreeIntoDB(req.params.treeId);
@@ -23,4 +34,5 @@ const updateTree: RequestHandler = async (req, res) => {
 export const productsController = {
   getAllTrees,
   updateTree,
+  getSingleTree,
 };

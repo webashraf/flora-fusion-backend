@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 app.use((req, res) => {
-  res.status(500).json({
+  res.status(404).json({
     success: false,
     statusCode: 404,
     message: "Not Found",
