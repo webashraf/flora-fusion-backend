@@ -2,6 +2,8 @@ import { Tree } from "./products.model";
 
 // Retrive all trees
 const getAllProductsFromDB = async (query: Record<string, unknown>) => {
+  console.log(query);
+
   let searchTerm = "";
   if (query?.searchItem) {
     searchTerm = query?.searchItem as string;
@@ -19,7 +21,27 @@ const getAllProductsFromDB = async (query: Record<string, unknown>) => {
     sortType.price = 1;
   }
 
-  const result = await searchQuery.find().sort(sortType).populate("category");
+  let limit = 0;
+  let page = 0;
+  let skip = 0;
+  if (query?.limit) {
+    limit = Number(query?.limit);
+  }
+  if (query?.page) {
+    page = Number(query?.page);
+    console.log(page)
+    skip = (page - 1) * 1;
+    console.log(skip);
+  }
+
+  // console.log(page, limit, skip);
+
+  const result = await searchQuery
+    .find()
+    .sort(sortType)
+    .populate("category")
+    .limit(limit)
+    .skip(skip);
   return result;
 };
 
