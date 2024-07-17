@@ -1,8 +1,9 @@
+import { TProducts as TProduct } from "./products.interface";
 import { Tree } from "./products.model";
 
 // Retrive all trees
 const getAllProductsFromDB = async (query: Record<string, unknown>) => {
-  console.log(query);
+  // console.log(query);
 
   let searchTerm = "";
   if (query?.searchItem) {
@@ -29,7 +30,7 @@ const getAllProductsFromDB = async (query: Record<string, unknown>) => {
   }
   if (query?.page) {
     page = Number(query?.page);
-    console.log(page)
+    console.log(page);
     skip = (page - 1) * 1;
     console.log(skip);
   }
@@ -62,8 +63,16 @@ const updateTreeIntoDB = async (_id: string) => {
   return result;
 };
 
+// Create a new product
+const createProductIntoDB = async (payload: TProduct) => {
+  const result = await Tree.create(payload);
+
+  return result;
+};
+
 export const productsService = {
   getAllProductsFromDB,
   updateTreeIntoDB,
   getSingleTreeFromDB,
+  createProductIntoDB,
 };
