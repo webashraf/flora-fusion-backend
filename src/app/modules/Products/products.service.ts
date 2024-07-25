@@ -3,18 +3,23 @@ import { Tree } from "./products.model";
 
 // Retrive all trees
 const getAllProductsFromDB = async (query: Record<string, unknown>) => {
-  // console.log(query);
 
   let searchTerm = "";
   if (query?.searchItem) {
     searchTerm = query?.searchItem as string;
   }
 
+  let category = {};
+  if (query?.categoryId) {
+    category = { category: query?.categoryId as string };
+  }
+
   const searchQuery = Tree.find({
-    $or: ["name"].map((field) => ({
+    $or: ["name", "description"].map((field) => ({
       [field]: { $regex: searchTerm, $options: "i" },
     })),
   });
+
 
   let sortType: { price: any } = { price: -1 };
 
@@ -30,15 +35,11 @@ const getAllProductsFromDB = async (query: Record<string, unknown>) => {
   }
   if (query?.page) {
     page = Number(query?.page);
-    console.log(page);
     skip = (page - 1) * 1;
-    console.log(skip);
   }
 
-  // console.log(page, limit, skip);
-
   const result = await searchQuery
-    .find()
+    .find(category)
     .sort(sortType)
     .populate("category")
     .limit(limit)
@@ -58,7 +59,6 @@ const updateTreeIntoDB = async (_id: string) => {
     { new: true }
   );
 
-  // console.log(result);
 
   return result;
 };
@@ -70,9 +70,15 @@ const createProductIntoDB = async (payload: TProduct) => {
   return result;
 };
 
+const deleteTreeFromDB = async (params: string) => {
+  const result = await Tree.findByIdAndDelete(params);
+  return result;
+};
+
 export const productsService = {
   getAllProductsFromDB,
   updateTreeIntoDB,
   getSingleTreeFromDB,
   createProductIntoDB,
+  deleteTreeFromDB,
 };

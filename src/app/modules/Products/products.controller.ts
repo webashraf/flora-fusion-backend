@@ -40,9 +40,19 @@ const createProduct: RequestHandler = async (req, res) => {
   });
 };
 
+const deleteTree: RequestHandler = async (req, res) => {
+  const result = await productsService.deleteTreeFromDB(req.params.treeId);
+  res.status(200).json({
+    success: true,
+    message: "Product Deleted successfully!",
+    result: result,
+  });
+};
+
 export const productsController = {
   getAllTrees,
   updateTree,
   getSingleTree,
   createProduct,
+  deleteTree,
 };
