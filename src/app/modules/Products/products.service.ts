@@ -3,7 +3,6 @@ import { Tree } from "./products.model";
 
 // Retrive all trees
 const getAllProductsFromDB = async (query: Record<string, unknown>) => {
-
   let searchTerm = "";
   if (query?.searchItem) {
     searchTerm = query?.searchItem as string;
@@ -19,7 +18,6 @@ const getAllProductsFromDB = async (query: Record<string, unknown>) => {
       [field]: { $regex: searchTerm, $options: "i" },
     })),
   });
-
 
   let sortType: { price: any } = { price: -1 };
 
@@ -47,18 +45,15 @@ const getAllProductsFromDB = async (query: Record<string, unknown>) => {
   return result;
 };
 
+// Retrive a single product
 const getSingleTreeFromDB = async (params: string) => {
   return await Tree.findOne({ _id: params }).populate("category");
 };
 
 // update stock
-const updateTreeIntoDB = async (_id: string) => {
-  const result = await Tree.findByIdAndUpdate(
-    { _id },
-    { stock: 0 },
-    { new: true }
-  );
-
+const updateTreeIntoDB = async (_id: string, payload: TProduct) => {
+  console.log(payload);
+  const result = await Tree.findByIdAndUpdate({ _id }, payload, { new: true });
 
   return result;
 };
@@ -70,8 +65,13 @@ const createProductIntoDB = async (payload: TProduct) => {
   return result;
 };
 
+// Delete a product from the DB
 const deleteTreeFromDB = async (params: string) => {
-  const result = await Tree.findByIdAndDelete(params);
+  const result = await Tree.findByIdAndUpdate(
+    params,
+    { isAvailable: false },
+    { new: true }
+  );
   return result;
 };
 
