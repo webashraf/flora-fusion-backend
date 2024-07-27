@@ -7,4 +7,5 @@ export default {
   port: process.env.PORT,
   NODE_ENV: process.env.NODE_ENV,
   database_url: process.env.DATABASE_URL,
+  payment_secret_key: process.env.PAYMENT_SICRET_KEY,
 };

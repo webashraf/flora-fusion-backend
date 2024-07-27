@@ -1,3 +1,4 @@
+import { stripe } from "../../../app";
 import { Tree } from "../Products/products.model";
 import { TOrderInfo } from "./order.interface";
 import { Order } from "./order.model";
@@ -45,6 +46,17 @@ const createOrderIntoDB = async (payload: TOrderInfo) => {
   }
 };
 
+const createPaymentIntoDB = async (amount: number) => {
+  const res = stripe.paymentIntents.create({
+    amount,
+    currency: "usd",
+    payment_method_types: ["card"],
+  });
+
+  return res;
+};
+
 export const orderService = {
   createOrderIntoDB,
+  createPaymentIntoDB,
 };

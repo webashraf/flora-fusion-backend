@@ -20,7 +20,7 @@ const allRoutes = [
     route: categoryRoute,
   },
   {
-    path: "/create-order",
+    path: "/order",
     route: orderRoute,
   },
   // {
