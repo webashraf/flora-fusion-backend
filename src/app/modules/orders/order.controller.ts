@@ -1,4 +1,5 @@
 import { RequestHandler } from "express";
+import config from "../../config";
 import { orderService } from "./order.service";
 
 const createOrder: RequestHandler = async (req, res) => {

@@ -1,7 +1,9 @@
 import { stripe } from "../../../app";
+import config from "../../config";
 import { Tree } from "../Products/products.model";
 import { TOrderInfo } from "./order.interface";
 import { Order } from "./order.model";
+const stripee = require("stripe")(config.payment_secret_key);
 
 const createOrderIntoDB = async (payload: TOrderInfo) => {
   const session = await Order.startSession();
@@ -47,11 +49,14 @@ const createOrderIntoDB = async (payload: TOrderInfo) => {
 };
 
 const createPaymentIntoDB = async (amount: number) => {
-  const res = stripe.paymentIntents.create({
+  console.log(amount);
+  const res = await stripe.paymentIntents.create({
     amount,
     currency: "usd",
     payment_method_types: ["card"],
   });
+
+  console.log(res);
 
   return res;
 };
