@@ -48,15 +48,17 @@ const createOrderIntoDB = async (payload: TOrderInfo) => {
   }
 };
 
-const createPaymentIntoDB = async (amount: number) => {
-  console.log(amount);
+const createPaymentIntoDB = async (price: number = 0) => {
+  console.log("price", price);
+  const amount = price * 100;
+  // console.log({ amount });
   const res = await stripe.paymentIntents.create({
     amount,
     currency: "usd",
     payment_method_types: ["card"],
   });
 
-  console.log(res);
+  // console.log(res);
 
   return res;
 };

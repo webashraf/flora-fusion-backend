@@ -1,5 +1,4 @@
 import { RequestHandler } from "express";
-import config from "../../config";
 import { orderService } from "./order.service";
 
 const createOrder: RequestHandler = async (req, res) => {
@@ -14,11 +13,12 @@ const createOrder: RequestHandler = async (req, res) => {
 
 const createPayment: RequestHandler = async (req, res) => {
   const { price } = req.body;
-  const centAmount = String(price * 100);
-  const amount = parseInt(centAmount);
-  console.log("🚀 ~ app.post ~ amount:", amount);
 
-  const paymentIntent = await orderService.createPaymentIntoDB(amount);
+  console.log("amounts", price);
+  // const amount = parseInt(centAmount);
+  // console.log("🚀 ~ app.post ~ amount:", amount);
+
+  const paymentIntent = await orderService.createPaymentIntoDB(price);
 
   res.send({
     clientSecret: paymentIntent.client_secret,

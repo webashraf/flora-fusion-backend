@@ -22,7 +22,6 @@ const getSingleTree: RequestHandler = async (req, res) => {
 };
 
 const updateTree: RequestHandler = async (req, res) => {
-  console.log(req.params.id);
   const result = await productsService.updateTreeIntoDB(
     req.params.treeId,
     req.body
