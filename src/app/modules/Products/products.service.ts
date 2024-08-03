@@ -52,7 +52,7 @@ const getSingleTreeFromDB = async (params: string) => {
 
 // update stock
 const updateTreeIntoDB = async (_id: string, payload: TProduct) => {
-  console.log(payload);
+  // console.log(payload);
   const result = await Tree.findByIdAndUpdate({ _id }, payload, { new: true });
 
   return result;

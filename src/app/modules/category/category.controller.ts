@@ -13,7 +13,7 @@ const getAllCategory: RequestHandler = async (req, res) => {
 const updateCategory: RequestHandler = async (req, res) => {
   const id = req.params.id;
   const data = req.body;
-  console.log("🚀 ~ constupdateCategory:RequestHandler= ~ data:", data);
+  // console.log("🚀 ~ constupdateCategory:RequestHandler= ~ data:", data);
 
   const result = await categoryService.updateCategoryIntoDB(id, data);
   res.status(200).json({

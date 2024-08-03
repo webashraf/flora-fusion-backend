@@ -14,10 +14,7 @@ const createOrder: RequestHandler = async (req, res) => {
 const createPayment: RequestHandler = async (req, res) => {
   const { price } = req.body;
 
-  console.log("amounts", price);
-  // const amount = parseInt(centAmount);
-  // console.log("🚀 ~ app.post ~ amount:", amount);
-
+  // console.log("amounts", price);
   const paymentIntent = await orderService.createPaymentIntoDB(price);
 
   res.send({
