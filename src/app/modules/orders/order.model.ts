@@ -16,10 +16,10 @@ const OrderSchema = new mongoose.Schema<TOrderInfo>({
   mobileNumber: { type: String, required: true },
   optionalWhatsAppNumber: { type: String },
   address: { type: String, required: true },
-  paymentMethod: { type: String, required: true },
+  paymentMethod: { type: String, required: true, default: "cash on" },
   division: { type: String, required: true },
   products: [orderedProducts],
-  totalAmount: { type: Number, required: true },
+  amount: { type: Number, required: true },
 });
 
 export const Order = mongoose.model<TOrderInfo>("Order", OrderSchema);

@@ -14,8 +14,8 @@ const createOrder: RequestHandler = async (req, res) => {
 const createPayment: RequestHandler = async (req, res) => {
   const { price } = req.body;
 
-  // console.log("amounts", price);
-  const paymentIntent = await orderService.createPaymentIntoDB(price);
+  console.log("amountssssssssssss", price);
+  const paymentIntent = await orderService.createPaymentIntoDB(price?.amount);
 
   res.send({
     clientSecret: paymentIntent.client_secret,

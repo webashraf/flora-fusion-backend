@@ -6,6 +6,8 @@ import { Order } from "./order.model";
 const stripee = require("stripe")(config.payment_secret_key);
 
 const createOrderIntoDB = async (payload: TOrderInfo) => {
+  console.log("🚀 ~ createOrderIntoDB ~ payload:", payload);
+
   const session = await Order.startSession();
   session.startTransaction();
 
@@ -27,7 +29,7 @@ const createOrderIntoDB = async (payload: TOrderInfo) => {
       }
 
       if (treeProduct.stock < product.qty) {
-        throw new Error(`${product._id} is insufficient stock`);
+        throw new Error(`${product.name} is insufficient stock.`);
       }
 
       treeProduct.stock -= product.qty;
@@ -49,11 +51,11 @@ const createOrderIntoDB = async (payload: TOrderInfo) => {
 };
 
 const createPaymentIntoDB = async (price: number = 0) => {
-  // console.log("price", price);
-  const amount = Math.floor(price * 100);
-
-  // console.log("🚀 ~ createPaymentIntoDB ~ amount:", amount);
-  
+  console.log("pricesdfasdfsfdsaf", price);
+  const finalAmount = Math.floor(price * 100);
+  console.log("🚀 ~ createPaymentIntoDB ~ finalAmount:", finalAmount);
+  const amount = Number(finalAmount);
+  console.log("🚀 ~ createPaymentIntoDB ~ amount:", amount);
 
   const res = await stripe.paymentIntents.create({
     amount,

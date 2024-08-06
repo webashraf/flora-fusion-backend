@@ -13,8 +13,8 @@ export type TOrderInfo = {
   mobileNumber: string;
   optionalWhatsAppNumber?: string;
   address: string;
-  paymentMethod: string;
+  paymentMethod: "cash on";
   division: string;
   products: TOrderedProducts[];
-  totalAmount: number;
+  amount: number;
 };
