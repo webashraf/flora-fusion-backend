@@ -12,10 +12,11 @@ const createOrder: RequestHandler = async (req, res) => {
 };
 
 const createPayment: RequestHandler = async (req, res) => {
-  const { price } = req.body;
+  const { payload } = req.body;
+  console.log("🚀 ~ constcreatePayment:RequestHandler= ~ price:", payload);
 
-  console.log("amountssssssssssss", price);
-  const paymentIntent = await orderService.createPaymentIntoDB(price?.amount);
+  // console.log("amountssssssssssss", price);
+  const paymentIntent = await orderService.createPaymentIntoDB(payload);
 
   res.send({
     clientSecret: paymentIntent.client_secret,

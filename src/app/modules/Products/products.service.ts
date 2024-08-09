@@ -12,11 +12,25 @@ const getAllProductsFromDB = async (query: Record<string, unknown>) => {
   if (query?.categoryId) {
     category = { category: query?.categoryId as string };
   }
+  // console.log(category);
 
+  // const searchQuery = Tree.find({
+  //   $or: ["name", "description"].map((field) => ({
+  //     [field]: { $regex: searchTerm, $options: "i" },
+  //   })),
+  // });
+
+  // Constructing the search query
   const searchQuery = Tree.find({
-    $or: ["name", "description"].map((field) => ({
-      [field]: { $regex: searchTerm, $options: "i" },
-    })),
+    $and: [
+      {
+        $or: ["name", "description"].map((field) => ({
+          [field]: { $regex: searchTerm, $options: "i" },
+        })),
+      },
+      { isAvailable: true },
+      category,
+    ],
   });
 
   let sortType: { price: any } = { price: -1 };
@@ -75,10 +89,16 @@ const deleteTreeFromDB = async (params: string) => {
   return result;
 };
 
+// Retrive all deleted trees from the DB
+const retriveDeletes = async () => {
+  return await Tree.updateMany({ isAvailable: true });
+};
+
 export const productsService = {
   getAllProductsFromDB,
   updateTreeIntoDB,
   getSingleTreeFromDB,
   createProductIntoDB,
   deleteTreeFromDB,
+  retriveDeletes,
 };

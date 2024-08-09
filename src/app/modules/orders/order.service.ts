@@ -1,3 +1,4 @@
+import { AnyObject } from "mongoose";
 import { stripe } from "../../../app";
 import config from "../../config";
 import { Tree } from "../Products/products.model";
@@ -50,18 +51,23 @@ const createOrderIntoDB = async (payload: TOrderInfo) => {
   }
 };
 
-const createPaymentIntoDB = async (price: number = 0) => {
-  console.log("pricesdfasdfsfdsaf", price);
-  const finalAmount = Math.floor(price * 100);
-  console.log("🚀 ~ createPaymentIntoDB ~ finalAmount:", finalAmount);
+const createPaymentIntoDB = async (payload: AnyObject) => {
+  const order = await Order.create(payload);
+  console.log({ order });
+
+  // console.log("pricesdfasdfsfdsaf", price);
+  const finalAmount = Math.floor(payload?.amount * 100);
+  // console.log("🚀 ~ createPaymentIntoDB ~ finalAmount:", finalAmount);
   const amount = Number(finalAmount);
-  console.log("🚀 ~ createPaymentIntoDB ~ amount:", amount);
+  // console.log("🚀 ~ createPaymentIntoDB ~ amount:", amount);
 
   const res = await stripe.paymentIntents.create({
     amount,
     currency: "usd",
     payment_method_types: ["card"],
   });
+
+  console.log({ res });
 
   return res;
 };
