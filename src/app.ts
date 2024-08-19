@@ -10,7 +10,7 @@ app.use(cors({ origin: ["http://localhost:5173"] }));
 
 app.use("/api/v1/", router);
 
-app.get("/api/v1/", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
