@@ -1,14 +1,11 @@
 import { AnyObject } from "mongoose";
 import { stripe } from "../../../app";
-import config from "../../config";
 import { Tree } from "../Products/products.model";
 import { TOrderInfo } from "./order.interface";
 import { Order } from "./order.model";
-const stripee = require("stripe")(config.payment_secret_key);
+// const stripee = require("stripe")(config.payment_secret_key);
 
 const createOrderIntoDB = async (payload: TOrderInfo) => {
-  console.log("🚀 ~ createOrderIntoDB ~ payload:", payload);
-
   const session = await Order.startSession();
   session.startTransaction();
 
@@ -52,14 +49,8 @@ const createOrderIntoDB = async (payload: TOrderInfo) => {
 };
 
 const createPaymentIntoDB = async (payload: AnyObject) => {
-  const order = await Order.create(payload);
-  console.log({ order });
-
-  // console.log("pricesdfasdfsfdsaf", price);
   const finalAmount = Math.floor(payload?.amount * 100);
-  // console.log("🚀 ~ createPaymentIntoDB ~ finalAmount:", finalAmount);
   const amount = Number(finalAmount);
-  // console.log("🚀 ~ createPaymentIntoDB ~ amount:", amount);
 
   const res = await stripe.paymentIntents.create({
     amount,

@@ -2,6 +2,8 @@ import { RequestHandler } from "express";
 import { orderService } from "./order.service";
 
 const createOrder: RequestHandler = async (req, res) => {
+  console.log("Payloadss", req.body);
+
   const result = await orderService.createOrderIntoDB(req.body);
 
   res.status(200).json({
@@ -13,7 +15,7 @@ const createOrder: RequestHandler = async (req, res) => {
 
 const createPayment: RequestHandler = async (req, res) => {
   const { payload } = req.body;
-  console.log("🚀 ~ constcreatePayment:RequestHandler= ~ price:", payload);
+  console.log("🚀 ~ constcreatePayment:RequestHandler= ~ payload:", payload);
 
   // console.log("amountssssssssssss", price);
   const paymentIntent = await orderService.createPaymentIntoDB(payload);
