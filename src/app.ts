@@ -11,8 +11,8 @@ const corsOptions = {
   origin: [
     "http://localhost:3000",
     "http://localhost:5173",
-    "https://flora-fusion-backend.vercel.app/",
-    "https://flora-fussing.vercel.app/",
+    "https://flora-fusion-backend.vercel.app",
+    "https://flora-fussing.vercel.app",
   ],
 };
 
