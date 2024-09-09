@@ -2,15 +2,10 @@ import express from "express";
 import { categoryRoute } from "../modules/category/category.routes";
 import { orderRoute } from "../modules/orders/order.routes";
 import { productsRoute } from "../modules/Products/products.routes";
-import { userRoutes } from "../modules/user/user.routes";
 
 const router = express.Router();
 
 const allRoutes = [
-  {
-    path: "/user",
-    route: userRoutes,
-  },
   {
     path: "/products",
     route: productsRoute,
@@ -23,10 +18,7 @@ const allRoutes = [
     path: "/order",
     route: orderRoute,
   },
-  // {
-  //   path: "/create-order",
-  //   route: orderRoute,
-  // },
+
 ];
 
 allRoutes.forEach((route) => {
